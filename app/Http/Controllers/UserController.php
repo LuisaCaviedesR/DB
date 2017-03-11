@@ -38,6 +38,20 @@ class UserController extends Controller
         return view('users.create');
     }
 
+    public function edit(Request $request, $id)
+    {
+        try
+        {
+            $user = User::findOrFail($id);
+            return view('users.edit', ['data' => $user]);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            Session::flash('flash_message', "The User ($id) could not be found to be edited!");
+            return redirect()->back();
+        }
+    }
+
     public function store(Request $request)
     {
 
