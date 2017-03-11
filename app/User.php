@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Support\Facades\Hash;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -40,5 +40,9 @@ class User extends Authenticatable
     public function groups()
     {
         return $this->belongsToMany('App\Group');
+    }
+
+    public function setPasswordAttribute($plainPassword){
+        $this->attributes['password']= Hash::make($plainPassword);
     }
 }
