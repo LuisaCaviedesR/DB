@@ -15,12 +15,17 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
             $table->text('address')->nullable();
             $table->string('phone', 12)->nullable();
             $table->string('city', 45)->nullable();
             $table->string('country', 45)->nullable();
             $table->string('website', 128)->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users') // FK
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
         });
     }
