@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use Session;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 class UserController extends Controller
 {
@@ -18,8 +20,17 @@ class UserController extends Controller
 
     public function show(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        return view('users.show')->withData($user);
+        try
+            {
+                $user = User::findOrFail($id);
+                // return view('users.show')->withData($user);
+                return view('users.show', ['data' => $user]);
+            }
+        catch(ModelNotFoundException $e)
+        {
+            Session::flash('flash_message', "The User ($id) could not be found!");
+            return redirect()->back();
+        }
     }
 
     public function create(Request $request)
