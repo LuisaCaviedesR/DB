@@ -21,11 +21,8 @@ class UserController extends Controller
             'email' => 'required | email',
             'password' => 'required | string | min:8 | max:64',
         ]);
-
         $input = $request->all();
-
         User::create($input);
-
         return redirect('/home');
     }
 }
