@@ -10,7 +10,14 @@ use Session;
 class UserController extends Controller
 {
     //
-     public function create(Request $request)
+    public function index(Request $request)
+    {
+        $users = User::all();
+        return view('users.index', ['list' => $users]);
+    }
+
+
+    public function create(Request $request)
     {
         return view('users.create');
     }
