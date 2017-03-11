@@ -16,12 +16,12 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
+        $input = $request->all();
         $this->validate($request, [
             'name' => 'required | string | alpha_dash | max:66',
             'email' => 'required | email',
             'password' => 'required | string | min:8 | max:64',
         ]);
-        $input = $request->all();
         User::create($input);
         return redirect('/home');
     }
