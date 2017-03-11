@@ -52,6 +52,28 @@ class UserController extends Controller
         }
     }
 
+   public function update(Request $request, $id)
+    {
+        try
+        {
+             $user = User::findOrFail($id);
+             $this->validate($request, [
+             'name' => 'required | string | alpha_dash | max:66',
+             'email' => 'required | email',
+             'password' => 'required | string | min:8 | max:64',
+             ]);
+             $input = $request->all();
+             $user->fill($input)->save();
+             Session::flash('flash_message', 'User successfully edited!');
+             return redirect('/home');
+        }
+        catch(ModelNotFoundException $e)
+        {
+            Session::flash('flash_message', "The User ($id) could not be found to be edited!");
+            return redirect()->back();
+        }
+ }
+
     public function store(Request $request)
     {
 
