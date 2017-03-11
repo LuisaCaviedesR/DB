@@ -77,6 +77,12 @@
                 </div>
             </div>
         </nav>
+        <!-- Espacio para los mensajes flash enviados entre solicitudes -->
+            @if(Session::has('flash_message'))
+                <article class="alert alert-success">
+                    {{ Session::get('flash_message') }}
+                </article>
+            @endif
 
         @yield('content')
     </div>

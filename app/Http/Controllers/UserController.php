@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Session;
+
 class UserController extends Controller
 {
     //
@@ -23,6 +25,7 @@ class UserController extends Controller
             'password' => 'required | string | min:8 | max:64',
         ]);
         User::create($input);
+        Session::flash('flash_message', 'User successfully added!');
         return redirect('/home');
     }
 }
